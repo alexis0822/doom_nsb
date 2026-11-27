@@ -1,0 +1,284 @@
+:root {
+  --ink: #f4f5f2;
+  --muted: rgba(244, 245, 242, 0.7);
+  --num: clamp(2.4rem, 6.35vw, 5.65rem);
+  --title: clamp(1.05rem, 2.35vw, 1.85rem);
+  --label: clamp(0.5rem, 0.72vw, 0.7rem);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: #000;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  font-family: "Barlow", "Avenir Next", "Segoe UI", sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.scene {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #000;
+  animation: reveal 1.6s ease both;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+}
+
+.media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.28) 12%,
+    transparent 22%
+  );
+  pointer-events: none;
+}
+
+.dust,
+.grain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.grain {
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  animation: grain 0.7s steps(2) infinite;
+}
+
+.poster {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 9.5vh;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 96vw;
+  text-align: center;
+  animation: rise 1.3s 0.35s ease both;
+}
+
+h1 {
+  margin: 0 0 0.55em;
+  font-size: var(--title);
+  font-weight: 600;
+  letter-spacing: 0.46em;
+  padding-left: 0.46em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.65);
+}
+
+.timer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.num,
+.sep {
+  font-size: var(--num);
+  font-weight: 600;
+  line-height: 0.84;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+}
+
+.num {
+  display: block;
+  min-width: 2ch;
+  text-align: center;
+}
+
+.num.tick {
+  animation: tick 0.42s ease;
+}
+
+.sep {
+  padding: 0 0.085em;
+  font-weight: 500;
+  opacity: 0.92;
+}
+
+.lbl {
+  margin-top: 0.72em;
+  font-size: var(--label);
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  padding-left: 0.32em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.release {
+  margin: 1.35rem 0 0;
+  font-size: clamp(0.58rem, 0.85vw, 0.72rem);
+  letter-spacing: 0.42em;
+  padding-left: 0.42em;
+  text-transform: uppercase;
+}
+
+.release a {
+  color: rgba(244, 245, 242, 0.62);
+  text-decoration: none;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.release a:hover,
+.release a:focus-visible {
+  color: #fff;
+}
+
+.release a:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 4px;
+}
+
+::selection {
+  background: rgba(150, 230, 70, 0.35);
+  color: #fff;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 14px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes grain {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-1.5%, 1%);
+  }
+  50% {
+    transform: translate(1%, -1.5%);
+  }
+  75% {
+    transform: translate(-1%, 1.5%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes tick {
+  0% {
+    filter: brightness(1.85);
+    transform: translateY(-0.04em);
+  }
+  100% {
+    filter: brightness(1);
+    transform: none;
+  }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --num: clamp(2rem, 11.4vw, 3rem);
+    --title: clamp(0.92rem, 3.5vw, 1.08rem);
+    --label: 0.52rem;
+  }
+
+  h1 {
+    letter-spacing: 0.26em;
+    padding-left: 0.26em;
+    margin-bottom: 0.65em;
+  }
+
+  .lbl {
+    letter-spacing: 0.14em;
+    padding-left: 0.14em;
+    margin-top: 0.6em;
+  }
+
+  .sep {
+    padding: 0 0.04em;
+  }
+
+  .release {
+    letter-spacing: 0.24em;
+    padding-left: 0.24em;
+    margin-top: 1rem;
+  }
+
+  .poster {
+    bottom: 7vh;
+  }
+}
+
+@media (max-height: 560px) {
+  :root {
+    --num: clamp(1.7rem, 7vh, 3.2rem);
+    --title: clamp(0.72rem, 2.4vh, 1.1rem);
+  }
+
+  .poster {
+    bottom: 4vh;
+  }
+
+  .release {
+    margin-top: 0.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene,
+  .poster,
+  .grain,
+  .num.tick {
+    animation: none;
+  }
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Doomsday Is Coming</title>
+    <meta
+      name="description"
+      content="Countdown to Avengers: Doomsday. In theaters December 18, 2026."
+    />
+    <meta name="theme-color" content="#000000" />
+    <link
+      rel="icon"
+      href="assets/O_solo_transparent.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="scene">
+      <div class="media">
+        <img
+          src="assets/omicron_solo.jpeg"
+          alt="Omicron logo in brushed metal with a green glow."
+        />
+      </div>
+      <div class="shade" aria-hidden="true"></div>
+      <canvas class="dust" aria-hidden="true"></canvas>
+      <div class="grain" aria-hidden="true"></div>
+
+      <main class="poster">
+        <h1 id="headline">Doomsday Is Coming</h1>
+        <div class="timer" id="timer" role="timer" aria-atomic="true">
+          <div class="unit">
+            <span class="num" id="months">00</span>
+            <span class="lbl">Months</span>
+          </div>
+          <span class="sep" aria-hidden="true">:</span>
+          <div class="unit">
+            <span class="num" id="days">00</span>
+            <span class="lbl">Days</span>
+          </div>
+          <span class="sep" aria-hidden="true">:</span>
+          <div class="unit">
+            <span class="num" id="hours">00</span>
+            <span class="lbl">Hours</span>
+          </div>
+          <span class="sep" aria-hidden="true">:</span>
+          <div class="unit">
+            <span class="num" id="minutes">00</span>
+            <span class="lbl">Minutes</span>
+          </div>
+          <span class="sep" aria-hidden="true">:</span>
+          <div class="unit">
+            <span class="num" id="seconds">00</span>
+            <span class="lbl">Seconds</span>
+          </div>
+        </div>
+        <p class="release">
+          <a
+            href="https://www.marvel.com/movies/avengers-doomsday"
+            target="_blank"
+            rel="noopener noreferrer"
+            >
+        </p>
+      </main>
+    </div>
+    <script src="js/main.js"></script>
+  </body>
+</html>

@@ -53,7 +53,7 @@ function paint(parts) {
 
   const spoken = parts.done
     ? "Doomsday is here. Avengers: Doomsday is in theaters."
-    : `${parts.months} months, ${parts.days} days, ${parts.hours} hours, ${parts.minutes} minutes, ${parts.seconds} seconds until December 18, 2026.`;
+    : `${parts.months} months, ${parts.days} days, ${parts.hours} hours, ${parts.minutes} minutes, ${parts.seconds} seconds until ${RELEASE.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.`;
 
   if (timer.getAttribute("aria-label") !== spoken) {
     timer.setAttribute("aria-label", spoken);
@@ -95,15 +95,16 @@ if (canvas && motionOk) {
     return {
       x: Math.random() * canvas.width,
       y: anywhere ? Math.random() * canvas.height : canvas.height + 4,
-      r: Math.random() * 1.25 + 0.25,
-      a: Math.random() * 0.28 + 0.06,
-      s: Math.random() * 0.22 + 0.05,
-      drift: (Math.random() - 0.5) * 0.18,
+      r: Math.random() * 1.15 + 0.2,
+      a: Math.random() * 0.22 + 0.04,
+      s: Math.random() * 0.14 + 0.03,
+      drift: (Math.random() - 0.5) * 0.12,
+      green: Math.random() > 0.72 ? "57, 255, 20" : "25, 195, 50",
     };
   }
 
   function seed() {
-    const count = Math.min(56, Math.round(window.innerWidth / 28));
+    const count = Math.min(28, Math.round(window.innerWidth / 56));
     specks = Array.from({ length: count }, () => makeSpeck(true));
   }
 
@@ -117,7 +118,7 @@ if (canvas && motionOk) {
         Object.assign(speck, makeSpeck(false));
       }
       ctx.beginPath();
-      ctx.fillStyle = `rgba(214, 232, 186, ${speck.a})`;
+      ctx.fillStyle = `rgba(${speck.green}, ${speck.a})`;
       ctx.arc(speck.x, speck.y, speck.r, 0, Math.PI * 2);
       ctx.fill();
     }
@@ -136,4 +137,60 @@ if (canvas && motionOk) {
     running = !document.hidden;
     if (running && !wasRunning) frame();
   });
+}
+
+const emblem = document.getElementById("emblem");
+const rig = emblem && emblem.querySelector(".emblem-rig");
+if (emblem && rig && motionOk) {
+  let introTimer = 0;
+  let targetX = 0;
+  let targetY = 0;
+  let currentX = 0;
+  let currentY = 0;
+
+  function playIntro() {
+    emblem.classList.remove("is-intro");
+    void emblem.offsetWidth;
+    emblem.classList.add("is-intro");
+    window.clearTimeout(introTimer);
+    introTimer = window.setTimeout(() => emblem.classList.remove("is-intro"), 2200);
+  }
+
+  function tilt(event) {
+    const bounds = emblem.getBoundingClientRect();
+    const nx = (event.clientX - (bounds.left + bounds.width / 2)) / (window.innerWidth * 0.5);
+    const ny = (event.clientY - (bounds.top + bounds.height / 2)) / (window.innerHeight * 0.5);
+    const clamp = (value) => Math.max(-1, Math.min(1, value));
+    targetY = clamp(nx) * 8;
+    targetX = clamp(-ny) * 6;
+    const hx = ((event.clientX - bounds.left) / bounds.width) * 100;
+    const hy = ((event.clientY - bounds.top) / bounds.height) * 100;
+    emblem.style.setProperty("--hx", `${hx}%`);
+    emblem.style.setProperty("--hy", `${hy}%`);
+    const over =
+      event.clientX >= bounds.left &&
+      event.clientX <= bounds.right &&
+      event.clientY >= bounds.top &&
+      event.clientY <= bounds.bottom;
+    emblem.classList.toggle("is-tilting", over);
+  }
+
+  function rest() {
+    targetX = 0;
+    targetY = 0;
+    emblem.classList.remove("is-tilting");
+  }
+
+  function renderTilt() {
+    currentX += (targetX - currentX) * 0.08;
+    currentY += (targetY - currentY) * 0.08;
+    rig.style.transform = `rotateX(${currentX.toFixed(3)}deg) rotateY(${currentY.toFixed(3)}deg)`;
+    requestAnimationFrame(renderTilt);
+  }
+
+  emblem.addEventListener("click", playIntro);
+  window.addEventListener("pointermove", tilt);
+  emblem.addEventListener("pointerleave", rest);
+  renderTilt();
+  playIntro();
 }

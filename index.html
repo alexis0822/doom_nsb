@@ -23,11 +23,32 @@
   </head>
   <body>
     <div class="scene">
-      <div class="media">
-        <img
-          src="assets/omicron_solo.jpeg"
-          alt="Omicron logo in brushed metal with a green glow."
-        />
+      <div class="stage">
+        <button
+          class="emblem"
+          id="emblem"
+          type="button"
+          aria-label="Metallic O emblem. Activate to replay the reveal."
+        >
+          <span class="emblem-rig">
+            <span class="emblem-scale">
+              <img
+                class="plate"
+                src="assets/O_solo.jpeg"
+                alt="Brushed-steel O emblem with an emerald rim light."
+                draggable="false"
+              />
+              <img
+                class="aura"
+                src="assets/O_solo_transparent.png"
+                alt=""
+                draggable="false"
+              />
+              <span class="glint" aria-hidden="true"></span>
+              <span class="spec" aria-hidden="true"></span>
+            </span>
+          </span>
+        </button>
       </div>
       <div class="shade" aria-hidden="true"></div>
       <canvas class="dust" aria-hidden="true"></canvas>
